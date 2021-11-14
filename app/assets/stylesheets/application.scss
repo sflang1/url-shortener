@@ -1,0 +1,198 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+.flex {
+  display: flex;
+
+  &.column {
+    flex-direction: column;
+  }
+
+  &.row {
+    flex-direction: row;
+  }
+  &.row-reverse {
+    flex-direction: row-reverse;
+  }
+
+  & > .flex-grow {
+    flex: 1;
+  }
+
+  &.justify-center {
+
+  }
+
+  &.align-items-center {
+    align-items: center;
+  }
+}
+
+body {
+  margin: 0;
+}
+
+@function pow($number, $exponent) {
+  $value: 1;
+
+  @if $exponent > 0 {
+    @for $i from 1 through $exponent {
+      $value: $value * $number;
+    }
+  } @else if $exponent < 0 {
+    @for $i from 1 through -$exponent {
+      $value: $value / $number;
+    }
+  }
+
+  @return $value;
+}
+
+@for $i from 1 through 8 {
+  .mb-#{4*$i} {
+    margin-bottom: #{$i}rem;
+  }
+
+  .mt-#{4*$i} {
+    margin-top: #{$i}rem;
+  }
+
+  .ml-#{4*$i} {
+    margin-left: #{$i}rem;
+  }
+
+  .mr-#{4*$i} {
+    margin-right: #{$i}rem;
+  }
+
+  .my-#{4*$i} {
+    margin-top: #{$i}rem;
+    margin-bottom: #{$i}rem;
+  }
+
+  .mx-#{4*$i} {
+    margin-right: #{$i}rem;
+    margin-left: #{$i}rem;
+  }
+
+  .m-#{4*$i} {
+    margin-right: #{$i}rem;
+    margin-left: #{$i}rem;
+    margin-top: #{$i}rem;
+    margin-bottom: #{$i}rem;
+  }
+
+  .p-#{4*$i} {
+    padding-bottom: #{$i}rem;
+    padding-top: #{$i}rem;
+    padding-right: #{$i}rem;
+    padding-left: #{$i}rem;
+  }
+
+  .pb-#{4*$i} {
+    padding-bottom: #{$i}rem;
+  }
+
+  .pt-#{4*$i} {
+    padding-top: #{$i}rem;
+  }
+
+  .pl-#{4*$i} {
+    padding-left: #{$i}rem;
+  }
+
+  .pr-#{4*$i} {
+    padding-right: #{$i}rem;
+  }
+
+  .py-#{4*$i} {
+    padding-top: #{$i}rem;
+    padding-bottom: #{$i}rem;
+  }
+
+  .px-#{4*$i} {
+    padding-right: #{$i}rem;
+    padding-left: #{$i}rem;
+  }
+}
+
+@for $i from 1 through 3 {
+  .mb-1\/#{pow(2, $i)} {
+    margin-bottom: #{pow(2, -1*$i)}rem;
+  }
+
+  .mt-1\/#{pow(2, $i)} {
+    margin-top: #{pow(2, -1*$i)}rem;
+  }
+
+  .ml-1\/#{pow(2, $i)} {
+    margin-left: #{pow(2, -1*$i)}rem;
+  }
+
+  .mr-1\/#{pow(2, $i)} {
+    margin-right: #{pow(2, -1*$i)}rem;
+  }
+
+  .my-1\/#{pow(2, $i)} {
+    margin-bottom: #{pow(2, -1*$i)}rem;
+    margin-top: #{pow(2, -1*$i)}rem;
+  }
+
+  .mx-1\/#{pow(2, $i)} {
+    margin-right: #{pow(2, -1*$i)}rem;
+    margin-left: #{pow(2, -1*$i)}rem;
+  }
+
+  .m-1\/#{pow(2, $i)} {
+    margin-right: #{pow(2, -1*$i)}rem;
+    margin-left: #{pow(2, -1*$i)}rem;
+    margin-top: #{pow(2, -1*$i)}rem;
+    margin-bottom: #{pow(2, -1*$i)}rem;
+  }
+
+  .pb-1\/#{pow(2, $i)} {
+    padding-bottom: #{pow(2, -1*$i)}rem;
+  }
+
+  .pt-1\/#{pow(2, $i)} {
+    padding-top: #{pow(2, -1*$i)}rem;
+  }
+
+  .pl-1\/#{pow(2, $i)} {
+    padding-left: #{pow(2, -1*$i)}rem;
+  }
+
+  .pr-1\/#{pow(2, $i)} {
+    padding-right: #{pow(2, -1*$i)}rem;
+  }
+
+  .py-1\/#{pow(2, $i)} {
+    padding-bottom: #{pow(2, -1*$i)}rem;
+    padding-top: #{pow(2, -1*$i)}rem;
+  }
+
+  .px-1\/#{pow(2, $i)} {
+    padding-right: #{pow(2, -1*$i)}rem;
+    padding-left: #{pow(2, -1*$i)}rem;
+  }
+
+  .p-1\/#{pow(2, $i)} {
+    padding-right: #{pow(2, -1*$i)}rem;
+    padding-left: #{pow(2, -1*$i)}rem;
+    padding-top: #{pow(2, -1*$i)}rem;
+    padding-bottom: #{pow(2, -1*$i)}rem;
+  }
+}

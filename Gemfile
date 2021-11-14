@@ -27,6 +27,10 @@ gem 'jbuilder', '~> 2.7'
 
 gem 'dotenv-rails', '~> 2.7.6'
 
+# Devise and Doorkeeper for handling authentication
+gem 'devise', '~> 4.8.0'
+gem 'doorkeeper', '~> 5.5.4'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 

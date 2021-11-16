@@ -1,12 +1,12 @@
 import React from 'react';
 import { RecoilRoot } from 'recoil';
-import Routes from './Routes';
+import SessionInfoLoader from './SessionInfoLoader';
 import RecoilExternalWrapper from './store/RecoilExternalWrapper';
 
 const App = () => {
   return (
     <RecoilRoot>
-      <Routes />
+      <SessionInfoLoader />
       <RecoilExternalWrapper />
     </RecoilRoot>
   )

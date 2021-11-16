@@ -13,6 +13,14 @@ Doorkeeper.configure do
     #   User.find_by(id: session[:user_id]) || redirect_to(new_user_session_url)
   end
 
+  resource_owner_from_credentials do |routes|
+    user = User.find_for_database_authentication(email: params[:email])
+    if user&.valid_for_authentication? { user.valid_password?(params[:password]) } && user&.active_for_authentication?
+      request.env['warden'].set_user(user, scope: :user, store: false)
+      user
+    end
+  end
+
   # If you didn't skip applications controller from Doorkeeper routes in your application routes.rb
   # file then you need to declare this block in order to restrict access to the web interface for
   # adding oauth authorized applications. In other case it will return 403 Forbidden response
@@ -80,6 +88,7 @@ Doorkeeper.configure do
   # Doorkeeper responds to a requests.
   #
   # api_only
+  api_only
 
   # Enforce token request content type to application/x-www-form-urlencoded.
   # It is not enabled by default to not break prior versions of the gem.
@@ -216,6 +225,7 @@ Doorkeeper.configure do
   # `scopes` - the requested scopes (see Doorkeeper::OAuth::Scopes)
   #
   # use_refresh_token
+  use_refresh_token
 
   # Provide support for an owner to be assigned to each registered application (disabled by default)
   # Optional parameter confirmation: true (default: false) if you want to enforce ownership of
@@ -292,6 +302,7 @@ Doorkeeper.configure do
   # You can completely disable this feature with:
   #
   # allow_blank_redirect_uri false
+  allow_blank_redirect_uri true
   #
   # Or you can define your custom check:
   #
@@ -347,6 +358,7 @@ Doorkeeper.configure do
   #   https://datatracker.ietf.org/doc/html/rfc6819#section-4.4.3
   #
   # grant_flows %w[authorization_code client_credentials]
+  grant_flows %w[password]
 
   # Allows to customize OAuth grant flows that +each+ application support.
   # You can configure a custom block (or use a class respond to `#call`) that must
@@ -431,6 +443,9 @@ Doorkeeper.configure do
   #   client.superapp? or resource_owner.admin?
   # end
 
+  skip_authorization do
+    true
+  end
   # Configure custom constraints for the Token Introspection request.
   # By default this configuration option allows to introspect a token by another
   # token of the same application, OR to introspect the token that belongs to

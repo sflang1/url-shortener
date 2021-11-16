@@ -31,6 +31,8 @@ gem 'dotenv-rails', '~> 2.7.6'
 gem 'devise', '~> 4.8.0'
 gem 'doorkeeper', '~> 5.5.4'
 
+gem 'validate_url', '~> 1.0.13'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 

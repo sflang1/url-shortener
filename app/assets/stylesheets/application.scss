@@ -32,12 +32,12 @@
     flex: 1;
   }
 
-  &.justify-center {
-
-  }
-
   &.align-items-center {
     align-items: center;
+  }
+
+  &.align-items-flex-start {
+    align-items: flex-start;
   }
 }
 
@@ -195,4 +195,15 @@ body {
     padding-top: #{pow(2, -1*$i)}rem;
     padding-bottom: #{pow(2, -1*$i)}rem;
   }
+}
+
+#loading_banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

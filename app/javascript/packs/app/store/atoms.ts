@@ -1,3 +1,4 @@
+import { User } from '../interfaces/models/user';
 import { setRecoilExternalState } from './RecoilExternalWrapper';
 import { AlertColor } from "@mui/material";
 import { atom } from "recoil";
@@ -15,6 +16,11 @@ export const snackbarMessageState = atom<string>({
 export const snackbarOpenState = atom<boolean>({
   key: 'snackbarOpen',
   default: false
+});
+
+export const currentUserState = atom<User>({
+  key: 'currentUser',
+  default: null
 });
 
 export const showSnackbarMessage = (message: string, severity: AlertColor = 'success'): void => {

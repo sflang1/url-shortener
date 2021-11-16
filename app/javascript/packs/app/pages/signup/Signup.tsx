@@ -3,20 +3,32 @@ import { Formik } from "formik";
 import { Button, FormControl, Stack, TextField, Typography } from "@mui/material";
 import * as Yup from 'yup';
 import { client } from "../../utils/client";
-import { showSnackbarMessage } from "../../store/atoms";
+import { currentUserState, showSnackbarMessage } from "../../store/atoms";
 import { get } from 'lodash';
 import { humanize } from "../../utils/functions";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { config } from '../../config';
+import { GeneralResponse } from "../../interfaces/responses/general-response";
+import { User } from "../../interfaces/models/user";
 
 const Signup: React.FC = () => {
+  const [_, setCurrentUser] = useRecoilState(currentUserState);
+  const navigate = useNavigate();
+
   const onSubmit = (values, { setSubmitting }) => {
     client.post('/api/users', {
+      client_id: config.client_id,
       user: {
         email: values.email,
         password: values.password
       }
     }).then((response) => {
-      console.log("response ", response);
+      const parsedResponse = response.data as GeneralResponse<User>;
+      localStorage.setItem('access_token', parsedResponse.data.access_token);
+      localStorage.setItem('refresh_token', parsedResponse.data.refresh_token);
+      setCurrentUser(parsedResponse.data);
+      navigate('/')
       showSnackbarMessage('The user was successfully created');
       setSubmitting(false);
     }).catch(err => {
@@ -31,14 +43,16 @@ const Signup: React.FC = () => {
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email().required(),
-    password: Yup.string().min(6).max(128).required()
+    password: Yup.string().min(6).max(128).required(),
+    passwordConfirmation: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match'),
   });
 
   return (
     <Formik
       initialValues={{
         email: '',
-        password: ''
+        password: '',
+        passwordConfirmation: ''
       }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}>
@@ -66,6 +80,17 @@ const Signup: React.FC = () => {
                 onBlur={handleBlur}
                 error={touched.password && Boolean(errors.password)}
                 helperText={touched.password && errors.password}/>
+            </FormControl>
+            <FormControl variant="standard">
+              <TextField
+                name="passwordConfirmation"
+                label="Password Confirmation"
+                type="password"
+                value={values.passwordConfirmation}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.passwordConfirmation && Boolean(errors.passwordConfirmation)}
+                helperText={touched.passwordConfirmation && errors.passwordConfirmation}/>
             </FormControl>
             <div>
               <Typography variant="body1">

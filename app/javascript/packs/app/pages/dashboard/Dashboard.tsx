@@ -7,6 +7,7 @@ import { ShortenLinkResponse } from "../../interfaces/responses/shorten-link-res
 import { currentUserState, showSnackbarMessage } from "../../store/atoms";
 import { client } from "../../utils/client";
 import { useRecoilValue } from "recoil";
+import { createAuthClient } from "../../utils/authenticated-client";
 
 const Dashboard: React.FC = () => {
   const [url, setUrl] = useState('');
@@ -16,7 +17,8 @@ const Dashboard: React.FC = () => {
 
   const shortenLink = async () => {
     try {
-      const response = await client.post('/api/auth/links', {
+      const executableClient = currentUser ? createAuthClient() : client;
+      const response = await executableClient.post('/api/auth/links', {
         original_url: url
       });
       const parsedResponse = response.data as GeneralResponse<ShortenLinkResponse>;

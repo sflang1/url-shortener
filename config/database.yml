@@ -23,5 +23,5 @@ test:
   database: url_shortener_test
 
 production:
-  <<: *default
-  database: url_shortener_production
+  encoding: utf8
+  pool: 15
